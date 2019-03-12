@@ -1,0 +1,195 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="StudentModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Residence">
+          <Key>
+            <PropertyRef Name="ResidenceID" />
+          </Key>
+          <Property Name="ResidenceID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ResidenceName" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ResStudent">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="JoinYear" Type="int" Nullable="false" />
+          <Property Name="StudentID" Type="int" Nullable="false" />
+          <Property Name="ResidenceID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Student">
+          <Key>
+            <PropertyRef Name="StudentID" />
+          </Key>
+          <Property Name="StudentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StudentName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="StudentSurname" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__ResStuden__Resid__145C0A3F">
+          <End Role="Residence" Type="Self.Residence" Multiplicity="1" />
+          <End Role="ResStudent" Type="Self.ResStudent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Residence">
+              <PropertyRef Name="ResidenceID" />
+            </Principal>
+            <Dependent Role="ResStudent">
+              <PropertyRef Name="ResidenceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ResStuden__Stude__15502E78">
+          <End Role="Student" Type="Self.Student" Multiplicity="1" />
+          <End Role="ResStudent" Type="Self.ResStudent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="StudentID" />
+            </Principal>
+            <Dependent Role="ResStudent">
+              <PropertyRef Name="StudentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="StudentModelStoreContainer">
+          <EntitySet Name="Residence" EntityType="Self.Residence" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ResStudent" EntityType="Self.ResStudent" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Student" EntityType="Self.Student" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__ResStuden__Resid__145C0A3F" Association="Self.FK__ResStuden__Resid__145C0A3F">
+            <End Role="Residence" EntitySet="Residence" />
+            <End Role="ResStudent" EntitySet="ResStudent" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ResStuden__Stude__15502E78" Association="Self.FK__ResStuden__Stude__15502E78">
+            <End Role="Student" EntitySet="Student" />
+            <End Role="ResStudent" EntitySet="ResStudent" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="StudentModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Residence">
+          <Key>
+            <PropertyRef Name="ResidenceID" />
+          </Key>
+          <Property Name="ResidenceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ResidenceName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="ResStudents" Relationship="Self.FK__ResStuden__Resid__145C0A3F" FromRole="Residence" ToRole="ResStudent" />
+        </EntityType>
+        <EntityType Name="ResStudent">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="JoinYear" Type="Int32" Nullable="false" />
+          <Property Name="StudentID" Type="Int32" Nullable="false" />
+          <Property Name="ResidenceID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Residence" Relationship="Self.FK__ResStuden__Resid__145C0A3F" FromRole="ResStudent" ToRole="Residence" />
+          <NavigationProperty Name="Student" Relationship="Self.FK__ResStuden__Stude__15502E78" FromRole="ResStudent" ToRole="Student" />
+        </EntityType>
+        <EntityType Name="Student">
+          <Key>
+            <PropertyRef Name="StudentID" />
+          </Key>
+          <Property Name="StudentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StudentName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="StudentSurname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="ResStudents" Relationship="Self.FK__ResStuden__Stude__15502E78" FromRole="Student" ToRole="ResStudent" />
+        </EntityType>
+        <Association Name="FK__ResStuden__Resid__145C0A3F">
+          <End Role="Residence" Type="Self.Residence" Multiplicity="1" />
+          <End Role="ResStudent" Type="Self.ResStudent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Residence">
+              <PropertyRef Name="ResidenceID" />
+            </Principal>
+            <Dependent Role="ResStudent">
+              <PropertyRef Name="ResidenceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ResStuden__Stude__15502E78">
+          <End Role="Student" Type="Self.Student" Multiplicity="1" />
+          <End Role="ResStudent" Type="Self.ResStudent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="StudentID" />
+            </Principal>
+            <Dependent Role="ResStudent">
+              <PropertyRef Name="StudentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="StudentEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Residences" EntityType="Self.Residence" />
+          <EntitySet Name="ResStudents" EntityType="Self.ResStudent" />
+          <EntitySet Name="Students" EntityType="Self.Student" />
+          <AssociationSet Name="FK__ResStuden__Resid__145C0A3F" Association="Self.FK__ResStuden__Resid__145C0A3F">
+            <End Role="Residence" EntitySet="Residences" />
+            <End Role="ResStudent" EntitySet="ResStudents" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ResStuden__Stude__15502E78" Association="Self.FK__ResStuden__Stude__15502E78">
+            <End Role="Student" EntitySet="Students" />
+            <End Role="ResStudent" EntitySet="ResStudents" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="StudentModelStoreContainer" CdmEntityContainer="StudentEntities">
+          <EntitySetMapping Name="Residences">
+            <EntityTypeMapping TypeName="StudentModel.Residence">
+              <MappingFragment StoreEntitySet="Residence">
+                <ScalarProperty Name="ResidenceID" ColumnName="ResidenceID" />
+                <ScalarProperty Name="ResidenceName" ColumnName="ResidenceName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ResStudents">
+            <EntityTypeMapping TypeName="StudentModel.ResStudent">
+              <MappingFragment StoreEntitySet="ResStudent">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="JoinYear" ColumnName="JoinYear" />
+                <ScalarProperty Name="StudentID" ColumnName="StudentID" />
+                <ScalarProperty Name="ResidenceID" ColumnName="ResidenceID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Students">
+            <EntityTypeMapping TypeName="StudentModel.Student">
+              <MappingFragment StoreEntitySet="Student">
+                <ScalarProperty Name="StudentID" ColumnName="StudentID" />
+                <ScalarProperty Name="StudentName" ColumnName="StudentName" />
+                <ScalarProperty Name="StudentSurname" ColumnName="StudentSurname" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

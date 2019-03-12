@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="StudentModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Residence">
+    <Key>
+      <PropertyRef Name="ResidenceID" />
+    </Key>
+    <Property Name="ResidenceID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ResidenceName" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ResStudent">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="JoinYear" Type="int" Nullable="false" />
+    <Property Name="StudentID" Type="int" Nullable="false" />
+    <Property Name="ResidenceID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Student">
+    <Key>
+      <PropertyRef Name="StudentID" />
+    </Key>
+    <Property Name="StudentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="StudentName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="StudentSurname" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__ResStuden__Resid__145C0A3F">
+    <End Role="Residence" Type="Self.Residence" Multiplicity="1" />
+    <End Role="ResStudent" Type="Self.ResStudent" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Residence">
+        <PropertyRef Name="ResidenceID" />
+      </Principal>
+      <Dependent Role="ResStudent">
+        <PropertyRef Name="ResidenceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ResStuden__Stude__15502E78">
+    <End Role="Student" Type="Self.Student" Multiplicity="1" />
+    <End Role="ResStudent" Type="Self.ResStudent" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Student">
+        <PropertyRef Name="StudentID" />
+      </Principal>
+      <Dependent Role="ResStudent">
+        <PropertyRef Name="StudentID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="StudentModelStoreContainer">
+    <EntitySet Name="Residence" EntityType="Self.Residence" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ResStudent" EntityType="Self.ResStudent" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Student" EntityType="Self.Student" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__ResStuden__Resid__145C0A3F" Association="Self.FK__ResStuden__Resid__145C0A3F">
+      <End Role="Residence" EntitySet="Residence" />
+      <End Role="ResStudent" EntitySet="ResStudent" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ResStuden__Stude__15502E78" Association="Self.FK__ResStuden__Stude__15502E78">
+      <End Role="Student" EntitySet="Student" />
+      <End Role="ResStudent" EntitySet="ResStudent" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
